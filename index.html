@@ -1,0 +1,1545 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Thanh toán · Seyoul</title>
+  <meta name="robots" content="noindex,nofollow" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Be+Vietnam+Pro:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root{
+      --lav-50:#f7f3fc;
+      --lav-100:#ece0fb;
+      --lav-200:#d8c4f1;
+      --lav-300:#c1a7e2;
+      --lav-400:#b08fcc;
+      --lav-500:#9a79bb;
+      --lav-600:#8554a1;
+      --lav-700:#6c3e85;
+      --lav-800:#4a2c60;
+      --ink-900:#1a1418;
+      --ink-700:#3a3138;
+      --ink-500:#766b75;
+      --ink-300:#b8b0b7;
+      --ink-200:#e1dde0;
+      --ink-100:#efedee;
+      --bg:#fbfafb;
+      --panel:#ffffff;
+      --danger:#c8385a;
+      --success:#3e9a6a;
+      --radius:6px;
+    }
+    *{box-sizing:border-box}
+    html,body{margin:0;padding:0}
+    body{
+      font-family:'Be Vietnam Pro','Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;
+      color:var(--ink-900);
+      background:var(--bg);
+      font-size:14.5px;
+      line-height:1.55;
+      -webkit-font-smoothing:antialiased;
+      letter-spacing:-0.005em;
+    }
+    a{color:var(--lav-700);text-decoration:none}
+    a:hover{text-decoration:underline}
+    button{font-family:inherit;cursor:pointer;border:none;background:none;color:inherit}
+    input,select,textarea{font-family:inherit;font-size:14.5px}
+
+    /* ============ Layout ============ */
+    .wrap{
+      max-width:1200px;
+      margin:0 auto;
+      padding:0 28px;
+    }
+    .topbar{
+      border-bottom:1px solid var(--ink-100);
+      background:var(--panel);
+    }
+    .topbar-inner{
+      display:flex;align-items:center;justify-content:space-between;
+      padding:20px 0;
+    }
+    .logo{display:flex;align-items:center;gap:10px}
+    .logo svg{height:26px;width:auto;display:block}
+    .topbar-right{
+      display:flex;align-items:center;gap:18px;
+      color:var(--ink-500);font-size:13px;
+    }
+    .topbar-right .secure,
+    .topbar-right .cart-info{display:flex;align-items:center;gap:6px}
+    .topbar-right svg{width:14px;height:14px}
+
+    .grid{
+      display:grid;
+      grid-template-columns: 1fr 420px;
+      gap:72px;
+      padding:36px 0 100px;
+    }
+    @media (max-width: 900px){
+      body{font-size:14px;padding-bottom:84px}
+      .wrap{padding:0 16px}
+
+      .topbar-inner{padding:14px 0}
+      .logo svg{height:22px}
+      .topbar-right{gap:12px;font-size:12.5px}
+      .topbar-right .cart-text,
+      .topbar-right .secure-text{display:none}
+
+      .grid{grid-template-columns:1fr;gap:0;padding:0}
+
+      .summary-col{
+        order:-1;
+        margin:0 -16px 16px;
+        padding:0;
+        background:var(--panel);
+        border-bottom:1px solid var(--ink-100);
+      }
+      .summary{
+        border:none;box-shadow:none;border-radius:0;
+        background:transparent;padding:0;
+        position:relative;top:auto;
+      }
+      .summary-toggle{display:flex;padding:14px 16px;border-bottom:1px solid var(--ink-100)}
+      .summary-toggle.open{border-bottom:1px solid var(--ink-100)}
+      .summary-body{display:none;padding:14px 16px 18px;background:#fbfafb}
+      .summary-body.open{display:block}
+      .summary-head{padding-bottom:12px;margin-bottom:12px}
+
+      .form-col{padding-top:14px}
+
+      .section{margin-bottom:14px}
+      .section-head{margin-bottom:10px}
+      .section-head h2{font-size:15.5px}
+      .section-head .meta{font-size:12.5px}
+
+      .panel{padding:16px 14px}
+      .ship-method{padding:12px 14px}
+      .ship-method .title{font-size:14px}
+      .ship-method .desc{font-size:12.5px;line-height:1.4}
+      .ship-method .price{font-size:14px}
+
+      .pay-method .head{padding:12px 14px;gap:10px}
+      .pay-method .body{padding:14px}
+      .pay-name{font-size:14px}
+      .pay-name .small{font-size:12.5px}
+      .pay-logos .pill{height:20px;padding:0 6px;font-size:9.5px}
+
+      .field input,.field select{padding:18px 12px 7px;font-size:14.5px}
+      .field textarea{padding-top:22px}
+      .field label{left:12px}
+      .field input:not(:placeholder-shown) + label,
+      .field input:focus + label,
+      .field textarea:not(:placeholder-shown) + label,
+      .field textarea:focus + label,
+      .field.has-value label,
+      .field.is-select label{top:4px;font-size:10.5px}
+      .phone-wrap::before{left:12px}
+      .phone-wrap input{padding-left:46px}
+      .phone-wrap label{left:46px}
+
+      .place-block{margin-top:18px}
+      .place-block .btn-primary{display:none}
+      .place-foot{margin-top:0;font-size:12px}
+
+      .mock-banner{padding:7px 12px;font-size:11.5px;line-height:1.4}
+
+      footer.foot{padding:16px 0;font-size:12px}
+      .foot-inner{flex-direction:column;align-items:flex-start;gap:8px}
+
+      .qr-block{flex-direction:column;text-align:center;gap:12px}
+      .qr-info{text-align:center}
+    }
+
+    @media (max-width: 560px){
+      .voucher-section{margin:14px 0}
+      .voucher-section-head{margin-bottom:8px;font-size:13px}
+      .voucher-section-head .count{font-size:12px}
+      .voucher-section-head .toggle{display:none}
+
+      /* Mobile: voucher list collapsed by default, expand on demand */
+      .voucher-list{display:none}
+      .voucher-list.mobile-expanded{display:flex}
+      .voucher-expand-btn{display:flex}
+
+      /* Compact card: hide gradient stub, use small code badge instead */
+      .voucher-stub{display:none}
+      .v-code-badge{display:inline-flex;align-items:center}
+      .voucher{align-items:center}
+      .voucher.applied{
+        border-left:3px solid var(--lav-500);
+      }
+      .voucher-body{padding:10px 8px 10px 12px;gap:0}
+      .voucher-title{font-size:13px;line-height:1.3}
+      .voucher-desc{display:none}
+      .voucher-exp{display:none}
+      .voucher-meta-inline{display:block;
+        font-size:11.5px;color:var(--ink-500);margin-top:2px;
+        font-family:'Be Vietnam Pro',sans-serif;
+      }
+      .voucher-meta-inline .dot{margin:0 5px;color:var(--ink-300)}
+      .voucher-need{font-size:10.5px;margin-top:3px}
+
+      .voucher-cta{padding:0 10px}
+      .voucher-cta button{padding:7px 12px;min-width:auto;font-size:12px;border-radius:5px}
+      .voucher.applied .voucher-cta button{padding:7px 10px}
+      .voucher.applied .voucher-cta button svg{width:11px;height:11px}
+
+      .li-thumb{width:56px;height:56px}
+      .li-name{font-size:13.5px}
+      .li-var{font-size:12px}
+      .li-price{font-size:13.5px}
+      .li-price-orig{font-size:11.5px}
+      .li-tag{font-size:10.5px}
+
+      .success-card{padding:30px 22px}
+      .success-card h1{font-size:19px}
+      .success-card p{font-size:13px;margin-bottom:20px}
+
+      .topbar-right{gap:8px}
+      .topbar-right .secure svg{width:13px;height:13px}
+    }
+
+    /* ============ Mobile sticky CTA bar ============ */
+    .mobile-cta{display:none}
+    @media (max-width: 900px){
+      .mobile-cta{
+        display:flex;align-items:center;gap:12px;
+        position:fixed;left:0;right:0;bottom:0;
+        background:var(--panel);
+        border-top:1px solid var(--ink-100);
+        padding:10px 16px calc(10px + env(safe-area-inset-bottom, 0px));
+        z-index:40;
+        box-shadow:0 -6px 20px rgba(74,44,96,.10);
+      }
+      .mobile-cta-info{
+        flex:0 0 auto;line-height:1.15;
+      }
+      .mobile-cta-label{
+        font-size:11px;color:var(--ink-500);font-weight:500;
+        letter-spacing:.02em;
+      }
+      .mobile-cta-total{
+        font-size:17.5px;font-weight:700;
+        color:var(--ink-900);
+        font-variant-numeric:tabular-nums;
+        letter-spacing:-0.01em;
+        margin-top:1px;
+      }
+      .mobile-cta-btn{
+        flex:1;
+        background:var(--ink-900);color:#fff;
+        padding:14px 16px;border-radius:8px;
+        font-weight:600;font-size:15px;
+        display:flex;align-items:center;justify-content:center;gap:8px;
+        transition:background .15s;
+      }
+      .mobile-cta-btn:hover{background:var(--lav-800)}
+      .mobile-cta-btn:active{transform:translateY(1px)}
+      .mobile-cta-btn svg{width:16px;height:16px}
+    }
+
+    /* ============ Sections ============ */
+    .section{
+      margin-bottom:18px;
+    }
+    .section-head{
+      display:flex;align-items:baseline;justify-content:space-between;
+      margin-bottom:12px;
+    }
+    .section-head h2{
+      font-size:17px;font-weight:600;
+      margin:0;color:var(--ink-900);
+      letter-spacing:-0.01em;
+    }
+    .section-head .meta{
+      color:var(--ink-500);font-size:13px;
+    }
+    .section-sub{
+      color:var(--ink-500);font-size:13px;
+      margin:-6px 0 12px;
+    }
+
+    .panel{
+      background:var(--panel);
+      border:1px solid var(--ink-100);
+      border-radius:var(--radius);
+      padding:22px 24px;
+    }
+
+    .row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+    .row.three{grid-template-columns:1fr 1fr 1fr}
+    @media (max-width:560px){ .row,.row.three{grid-template-columns:1fr} }
+
+    /* ============ Form fields ============ */
+    .field{position:relative;margin-bottom:12px}
+    .field:last-child{margin-bottom:0}
+    .field label{
+      position:absolute;left:14px;top:14px;
+      color:var(--ink-300);font-size:14px;
+      pointer-events:none;transition:.15s ease all;
+      background:transparent;padding:0 4px;
+    }
+    .field input,.field select,.field textarea{
+      width:100%;
+      padding:18px 14px 8px;
+      border:1px solid var(--ink-200);
+      border-radius:6px;
+      background:#fff;
+      color:var(--ink-900);
+      outline:none;
+      transition:border-color .15s, box-shadow .15s;
+    }
+    .field textarea{min-height:72px;resize:vertical;padding-top:22px}
+    .field select{
+      padding-top:14px;padding-bottom:12px;
+      appearance:none;
+      background-image:linear-gradient(45deg,transparent 50%,var(--ink-500) 50%),linear-gradient(135deg,var(--ink-500) 50%,transparent 50%);
+      background-position:calc(100% - 18px) 50%, calc(100% - 13px) 50%;
+      background-size:5px 5px;background-repeat:no-repeat;
+    }
+    .field input:focus,.field select:focus,.field textarea:focus{
+      border-color:var(--lav-500);
+      box-shadow:0 0 0 3px rgba(193,167,226,.22);
+    }
+    .field input:not(:placeholder-shown) + label,
+    .field input:focus + label,
+    .field textarea:not(:placeholder-shown) + label,
+    .field textarea:focus + label,
+    .field.has-value label,
+    .field.is-select label{
+      top:5px;font-size:11px;color:var(--ink-500);
+    }
+    .field.error input,.field.error select,.field.error textarea{border-color:var(--danger)}
+    .field .err-msg{
+      color:var(--danger);font-size:12px;margin-top:6px;display:none;
+    }
+    .field.error .err-msg{display:block}
+
+    .check{
+      display:flex;align-items:flex-start;gap:10px;
+      font-size:13.5px;color:var(--ink-700);
+      line-height:1.5;
+    }
+    .check + .check{margin-top:8px}
+    .check input{width:16px;height:16px;accent-color:var(--lav-600);margin-top:2px;flex-shrink:0}
+    .panel .check{margin-top:6px}
+
+    /* Phone prefix */
+    .phone-wrap{position:relative}
+    .phone-wrap::before{
+      content:'+66';
+      position:absolute;left:14px;top:22px;
+      font-size:14.5px;color:var(--ink-700);
+      pointer-events:none;
+    }
+    .phone-wrap input{padding-left:50px}
+    .phone-wrap label{left:50px}
+
+    /* ============ Shipping methods ============ */
+    .ship-method{
+      display:flex;align-items:center;justify-content:space-between;
+      padding:14px 16px;border:1px solid var(--ink-200);
+      border-radius:6px;margin-bottom:8px;cursor:pointer;
+      transition:border-color .15s, background .15s;
+    }
+    .ship-method:last-child{margin-bottom:0}
+    .ship-method:hover{border-color:var(--lav-400)}
+    .ship-method.selected{
+      border-color:var(--lav-500);
+      background:var(--lav-50);
+      box-shadow:0 0 0 3px rgba(193,167,226,.22);
+    }
+    .ship-method .left{display:flex;align-items:center;gap:12px;min-width:0}
+    .radio-dot{
+      width:18px;height:18px;border-radius:50%;
+      border:2px solid var(--ink-200);
+      display:flex;align-items:center;justify-content:center;
+      flex-shrink:0;
+    }
+    .selected > .left .radio-dot,
+    .pay-method.selected .pay-radio,
+    .ship-method.selected .radio-dot{border-color:var(--lav-600)}
+    .ship-method.selected .radio-dot::after,
+    .pay-method.selected .pay-radio::after{
+      content:'';width:8px;height:8px;border-radius:50%;background:var(--lav-600);
+    }
+    .ship-method .title{font-weight:500;font-size:14.5px}
+    .ship-method .desc{color:var(--ink-500);font-size:13px;margin-top:2px}
+    .ship-method .price{font-weight:500;font-size:14.5px;white-space:nowrap;margin-left:12px;font-variant-numeric:tabular-nums}
+
+    /* ============ Payment ============ */
+    .pay-method{
+      border:1px solid var(--ink-200);border-radius:6px;
+      margin-bottom:8px;overflow:hidden;
+      transition:border-color .15s, box-shadow .15s;
+    }
+    .pay-method:last-child{margin-bottom:0}
+    .pay-method:hover{border-color:var(--lav-400)}
+    .pay-method .head{
+      display:flex;align-items:center;justify-content:space-between;
+      padding:14px 16px;cursor:pointer;gap:12px;
+    }
+    .pay-method.selected{
+      border-color:var(--lav-500);
+      box-shadow:0 0 0 3px rgba(193,167,226,.22);
+    }
+    .pay-method.selected .head{background:var(--lav-50)}
+    .pay-method .body{
+      display:none;padding:16px;border-top:1px solid var(--ink-100);
+      background:#fdfcfe;
+    }
+    .pay-method.selected .body{display:block}
+    .pay-radio{
+      width:18px;height:18px;border-radius:50%;
+      border:2px solid var(--ink-200);flex-shrink:0;
+      display:flex;align-items:center;justify-content:center;
+    }
+    .pay-name{font-weight:500;font-size:14.5px;color:var(--ink-900)}
+    .pay-name .small{font-weight:400;color:var(--ink-500);font-size:13px;display:block;margin-top:1px}
+
+    .pay-logos{display:flex;gap:5px;align-items:center;flex-shrink:0}
+    .pay-logos .pill{
+      display:inline-flex;align-items:center;justify-content:center;
+      height:22px;padding:0 7px;border-radius:4px;
+      background:#fff;border:1px solid var(--ink-100);
+      font-family:'Inter',sans-serif;
+      font-size:10px;font-weight:700;color:var(--ink-700);
+      letter-spacing:.5px;
+    }
+    .pay-logos .visa{color:#1a1f71;border-color:#dde0ea}
+    .pay-logos .mc{color:#eb001b;border-color:#f7d7da}
+    .pay-logos .jcb{color:#0b4ea2;border-color:#d2dcec}
+    .pay-logos .momo{background:#a50064;color:#fff;border-color:#a50064}
+    .pay-logos .vnpay{background:#005baa;color:#fff;border-color:#005baa}
+    .pay-logos .zalo{background:#0068ff;color:#fff;border-color:#0068ff}
+    .pay-logos .bank{background:var(--ink-900);color:#fff;border-color:var(--ink-900)}
+
+    .qr-block{
+      display:flex;gap:18px;align-items:center;
+      padding:14px;background:#fff;border-radius:6px;
+      border:1px solid var(--ink-100);
+    }
+    .qr-img{
+      width:120px;height:120px;flex-shrink:0;
+      background:
+        repeating-linear-gradient(90deg, var(--ink-900) 0 3px, transparent 3px 6px),
+        repeating-linear-gradient(0deg, var(--ink-900) 0 3px, transparent 3px 6px),
+        #fff;
+      border:1px solid var(--ink-200);border-radius:4px;
+      position:relative;
+    }
+    .qr-img::after{
+      content:'';position:absolute;inset:42%;background:#fff;border-radius:2px;
+    }
+    .qr-info{font-size:13px;color:var(--ink-700)}
+    .qr-info b{display:block;color:var(--ink-900);font-size:14px;margin-bottom:4px}
+
+    /* ============ Place order ============ */
+    .place-block{
+      margin-top:24px;
+    }
+    .btn-primary{
+      background:var(--ink-900);color:#fff;
+      padding:18px 26px;border-radius:6px;
+      font-weight:600;font-size:15.5px;
+      transition:background .15s ease;
+      letter-spacing:.01em;
+      width:100%;
+      display:flex;align-items:center;justify-content:center;gap:10px;
+    }
+    .btn-primary:hover{background:var(--lav-800)}
+    .btn-primary:active{transform:translateY(1px)}
+    .btn-primary svg{width:16px;height:16px}
+    .place-foot{
+      text-align:center;color:var(--ink-500);
+      font-size:12.5px;margin-top:14px;
+      display:flex;align-items:center;justify-content:center;gap:6px;
+    }
+    .place-foot svg{width:13px;height:13px}
+
+    /* ============ Summary ============ */
+    .summary-col{position:relative}
+    .summary{
+      background:var(--panel);
+      border:1px solid var(--ink-100);
+      border-radius:var(--radius);
+      padding:24px;
+      position:sticky;top:24px;
+    }
+    .summary-toggle{
+      display:none;
+      align-items:center;justify-content:space-between;
+      padding:14px 0;
+      width:100%;
+    }
+    .summary-toggle .label{
+      display:flex;align-items:center;gap:8px;
+      color:var(--lav-700);font-weight:500;font-size:14px;
+    }
+    .summary-toggle .total{font-weight:600;font-size:17px;color:var(--ink-900);font-variant-numeric:tabular-nums}
+    .summary-toggle .chev{width:14px;height:14px;transition:transform .2s}
+    .summary-toggle.open .chev{transform:rotate(180deg)}
+
+    .line-item{
+      display:flex;align-items:flex-start;gap:14px;
+      padding-bottom:16px;margin-bottom:16px;
+      border-bottom:1px solid var(--ink-100);
+    }
+    .line-item:last-of-type{border-bottom:none;margin-bottom:18px}
+    .li-thumb{
+      position:relative;width:64px;height:64px;
+      border-radius:6px;
+      background:linear-gradient(135deg,var(--lav-100),var(--lav-200));
+      border:1px solid var(--ink-100);
+      flex-shrink:0;
+      display:flex;align-items:center;justify-content:center;
+    }
+    .li-thumb .qty-badge{
+      position:absolute;top:-8px;right:-8px;
+      background:var(--ink-700);color:#fff;
+      border-radius:999px;
+      min-width:22px;height:22px;
+      display:flex;align-items:center;justify-content:center;
+      font-size:11px;font-weight:600;font-family:'Inter',sans-serif;
+      border:2px solid #fff;
+    }
+    .li-thumb .glyph{
+      font-family:'Inter',sans-serif;
+      font-weight:700;letter-spacing:.5px;
+      color:var(--lav-700);font-size:13px;
+    }
+    .li-info{flex:1;min-width:0}
+    .li-name{font-weight:500;color:var(--ink-900);font-size:14px}
+    .li-var{color:var(--ink-500);font-size:13px;margin-top:2px}
+    .li-price{font-weight:500;color:var(--ink-900);font-size:14px;white-space:nowrap;font-variant-numeric:tabular-nums}
+    .li-price-block{display:flex;flex-direction:column;align-items:flex-end;gap:2px;flex-shrink:0}
+    .li-price-orig{color:var(--ink-300);font-size:12px;text-decoration:line-through;font-variant-numeric:tabular-nums}
+    .li-tag{
+      display:inline-flex;align-items:center;gap:4px;
+      font-size:11px;color:var(--lav-700);
+      background:var(--lav-50);
+      padding:2px 7px;border-radius:3px;
+      margin-top:6px;font-weight:500;width:fit-content;
+    }
+    .li-tag svg{width:11px;height:11px}
+    .li-qty-stepper{
+      display:inline-flex;align-items:center;
+      border:1px solid var(--ink-200);border-radius:4px;
+      margin-top:6px;font-family:'Inter',sans-serif;
+    }
+    .li-qty-stepper button{
+      width:22px;height:22px;display:flex;align-items:center;justify-content:center;
+      color:var(--ink-500);font-size:14px;line-height:1;
+    }
+    .li-qty-stepper button:hover{color:var(--ink-900);background:var(--ink-100)}
+    .li-qty-stepper .v{min-width:22px;text-align:center;font-size:12px;font-weight:600;color:var(--ink-900)}
+
+    /* ============ Summary header ============ */
+    .summary-head{
+      display:flex;align-items:baseline;justify-content:space-between;
+      padding-bottom:14px;margin-bottom:16px;
+      border-bottom:1px solid var(--ink-100);
+    }
+    .summary-head h3{font-size:15px;font-weight:600;margin:0}
+    .summary-head .small{color:var(--ink-500);font-size:13px;font-weight:400}
+    .summary-head .small a{color:var(--lav-700)}
+
+    /* ============ Voucher list ============ */
+    .voucher-section{margin:18px 0}
+    .voucher-section-head{
+      display:flex;align-items:center;justify-content:space-between;
+      margin-bottom:10px;font-size:14px;font-weight:600;color:var(--ink-900);
+    }
+    .voucher-section-head .count{
+      color:var(--ink-500);font-weight:400;font-size:12.5px;
+    }
+    .voucher-section-head .toggle{
+      color:var(--lav-700);font-weight:500;font-size:12.5px;cursor:pointer;
+    }
+    .voucher-section-head .toggle:hover{text-decoration:underline}
+    .voucher-list{display:flex;flex-direction:column;gap:8px}
+    .voucher{
+      display:flex;align-items:stretch;
+      background:#fff;border:1px solid var(--ink-200);
+      border-radius:8px;overflow:hidden;
+      position:relative;
+      transition:border-color .15s, box-shadow .15s, background .15s;
+    }
+    .voucher.disabled{opacity:.6}
+    .voucher.applied{
+      border-color:var(--lav-500);
+      background:linear-gradient(90deg,var(--lav-50),#fff 50%);
+      box-shadow:0 0 0 3px rgba(193,167,226,.22);
+    }
+    .voucher-stub{
+      width:62px;flex-shrink:0;
+      background:linear-gradient(135deg,var(--lav-300),var(--lav-500));
+      color:#fff;
+      display:flex;flex-direction:column;align-items:center;justify-content:center;
+      font-family:'Inter',sans-serif;
+      padding:8px 4px;text-align:center;
+    }
+    .voucher-stub.ship{background:linear-gradient(135deg,#3ea785,#0e7a55)}
+    .voucher-stub.gold{background:linear-gradient(135deg,#d4b06e,#9b7d3c)}
+    .voucher-stub .v-pct{font-size:20px;font-weight:700;line-height:1;letter-spacing:-0.02em}
+    .voucher-stub .v-pct .sup{font-size:11px;vertical-align:6px;font-weight:600;margin-right:1px}
+    .voucher-stub .v-tag{font-size:9px;text-transform:uppercase;letter-spacing:.6px;margin-top:4px;opacity:.95;font-weight:600}
+    .voucher-stub svg{width:22px;height:22px;display:block}
+    .voucher-body{
+      flex:1;display:flex;flex-direction:column;justify-content:center;
+      padding:10px 8px 10px 14px;min-width:0;
+    }
+    .voucher-title{font-size:13.5px;font-weight:500;color:var(--ink-900);line-height:1.3}
+    .voucher-desc{font-size:12px;color:var(--ink-500);margin-top:2px;line-height:1.4}
+    .voucher-exp{font-size:11px;color:var(--ink-500);margin-top:5px;font-family:'Inter',sans-serif;display:inline-flex;align-items:center;gap:4px}
+    .voucher-exp svg{width:11px;height:11px}
+    .v-code-badge{
+      display:none;
+      font-family:'Inter',sans-serif;
+      font-size:10.5px;font-weight:700;
+      color:var(--lav-700);
+      background:var(--lav-50);
+      padding:2px 7px;border-radius:3px;
+      letter-spacing:.04em;
+      align-self:flex-start;
+      margin-bottom:4px;
+      border:1px solid var(--lav-100);
+    }
+    .voucher-meta-inline{display:none}
+    .voucher-need{font-size:11px;color:var(--danger);margin-top:4px;font-weight:500}
+    .voucher-cta{
+      display:flex;align-items:center;justify-content:center;
+      padding:0 12px;flex-shrink:0;
+    }
+    .voucher-cta button{
+      padding:8px 14px;border-radius:5px;
+      background:var(--ink-900);color:#fff;
+      font-size:12.5px;font-weight:500;
+      white-space:nowrap;
+      transition:background .15s;
+      min-width:64px;
+    }
+    .voucher-cta button:hover:not(:disabled){background:var(--lav-800)}
+    .voucher-cta button:disabled{background:var(--ink-100);color:var(--ink-500);cursor:not-allowed}
+    .voucher.applied .voucher-cta button{
+      background:var(--lav-600);
+      display:inline-flex;align-items:center;gap:5px;
+    }
+    .voucher.applied .voucher-cta button svg{width:12px;height:12px}
+
+    .voucher-list.collapsed > .voucher:nth-child(n+4){display:none}
+
+    /* Mobile expand button — only visible on mobile to reveal voucher list */
+    .voucher-expand-btn{
+      display:none;
+      width:100%;
+      padding:11px 14px;
+      background:#fff;
+      border:1px solid var(--ink-200);
+      border-radius:6px;
+      color:var(--ink-700);
+      font-size:13px;font-weight:500;
+      align-items:center;justify-content:space-between;
+      transition:border-color .15s, background .15s;
+      margin-bottom:8px;
+    }
+    .voucher-expand-btn:hover{border-color:var(--lav-400);background:var(--lav-50)}
+    .voucher-expand-btn .left{display:flex;align-items:center;gap:10px;flex:1;min-width:0;text-align:left}
+    .voucher-expand-btn .left > svg{width:17px;height:17px;color:var(--lav-700);flex-shrink:0}
+    .voucher-expand-btn .texts{display:flex;flex-direction:column;gap:1px;flex:1;min-width:0;line-height:1.25}
+    .voucher-expand-btn .main{font-size:13px;font-weight:500;color:var(--ink-900)}
+    .voucher-expand-btn .main b{font-weight:600;color:var(--lav-700)}
+    .voucher-expand-btn .hint{font-size:11px;color:var(--lav-700);font-weight:500}
+    .voucher-expand-btn .chev{width:14px;height:14px;color:var(--ink-500);transition:transform .2s;flex-shrink:0;margin-left:8px}
+    .voucher-expand-btn.expanded .chev{transform:rotate(180deg)}
+
+    .promo{display:flex;gap:8px;margin-bottom:16px}
+    .promo input{
+      flex:1;padding:12px 14px;
+      border:1px solid var(--ink-200);
+      border-radius:6px;outline:none;background:#fff;
+      font-size:14px;
+    }
+    .promo input:focus{border-color:var(--lav-500);box-shadow:0 0 0 3px rgba(193,167,226,.22)}
+    .promo button{
+      padding:12px 18px;border-radius:6px;
+      background:var(--ink-100);color:var(--ink-700);
+      font-weight:500;font-size:14px;
+      transition:background .15s;
+    }
+    .promo button:hover:not(:disabled){background:var(--lav-200);color:var(--lav-800)}
+
+    .promo-applied{
+      display:flex;align-items:center;justify-content:space-between;
+      background:var(--lav-50);border:1px dashed var(--lav-300);
+      padding:10px 14px;border-radius:6px;margin-bottom:16px;font-size:13px;
+    }
+    .promo-applied .code{font-weight:600;color:var(--lav-700)}
+    .promo-applied .remove{color:var(--ink-500);font-size:12px}
+
+    .totals{font-size:14px;font-variant-numeric:tabular-nums}
+    .totals .row-t{display:flex;justify-content:space-between;padding:6px 0}
+    .totals .row-t.muted{color:var(--ink-500)}
+    .totals .row-t.discount{color:var(--lav-700)}
+    .totals .row-grand{
+      display:flex;justify-content:space-between;align-items:flex-end;
+      padding-top:14px;margin-top:8px;
+      border-top:1px solid var(--ink-100);
+      font-weight:600;
+    }
+    .totals .row-grand .label{font-size:15px}
+    .totals .row-grand .big{font-size:22px;color:var(--ink-900)}
+    .totals .row-grand .ccy{font-size:11px;color:var(--ink-500);margin-left:6px;font-weight:500}
+
+    /* ============ Success modal ============ */
+    .success-overlay{
+      position:fixed;inset:0;background:rgba(26,20,24,.4);
+      display:none;align-items:center;justify-content:center;
+      z-index:50;padding:20px;
+      backdrop-filter:blur(4px);
+    }
+    .success-overlay.open{display:flex}
+    .success-card{
+      background:var(--panel);border-radius:10px;
+      padding:40px 32px;max-width:480px;width:100%;
+      text-align:center;
+      box-shadow:0 20px 60px rgba(74,44,96,.18);
+    }
+    .check-circle{
+      width:64px;height:64px;margin:0 auto 20px;
+      border-radius:50%;
+      background:var(--lav-300);
+      display:flex;align-items:center;justify-content:center;
+      color:#fff;
+    }
+    .check-circle svg{width:32px;height:32px}
+    .success-card h1{font-size:22px;margin:0 0 8px;letter-spacing:-0.015em}
+    .success-card .order-no{color:var(--ink-500);font-size:14px;margin-bottom:8px}
+    .success-card .order-no b{color:var(--ink-900);font-weight:600;font-family:'Inter',sans-serif}
+    .success-card p{color:var(--ink-500);max-width:380px;margin:8px auto 24px;line-height:1.6;font-size:14px}
+
+    /* ============ Footer ============ */
+    footer.foot{
+      border-top:1px solid var(--ink-100);
+      background:var(--panel);
+      padding:22px 0;color:var(--ink-500);font-size:12.5px;
+    }
+    .foot-inner{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
+    .foot a{color:var(--ink-500)}
+    .foot a:hover{color:var(--lav-700)}
+
+    .mock-banner{
+      background:var(--lav-50);
+      color:var(--lav-700);
+      text-align:center;
+      padding:8px 16px;font-size:12px;
+      border-bottom:1px solid var(--lav-100);
+      letter-spacing:.01em;
+    }
+    .mock-banner b{font-weight:600}
+
+    /* ============ Mobile overrides (must come last to win cascade) ============ */
+    @media (max-width: 560px){
+      /* Voucher list collapsed by default, expand via button */
+      .voucher-list{display:none}
+      .voucher-list.mobile-expanded{display:flex}
+      .voucher-expand-btn{display:flex}
+      .voucher-section-head .toggle{display:none}
+
+      /* Compact card: hide gradient stub, surface code badge instead */
+      .voucher-stub{display:none}
+      .v-code-badge{display:inline-flex;align-items:center}
+      .voucher-desc{display:none}
+      .voucher-exp{display:none}
+      .voucher-meta-inline{
+        display:block;
+        font-size:11.5px;color:var(--ink-500);margin-top:2px;
+        font-family:'Be Vietnam Pro',sans-serif;
+      }
+      .voucher-meta-inline .dot{margin:0 5px;color:var(--ink-300)}
+
+      .voucher{align-items:center}
+      .voucher.applied{border-left:3px solid var(--lav-500)}
+      .voucher-body{padding:10px 8px 10px 12px;gap:0}
+      .voucher-title{font-size:13px;line-height:1.3}
+      .voucher-need{font-size:10.5px;margin-top:3px}
+
+      .voucher-cta{padding:0 10px}
+      .voucher-cta button{padding:7px 12px;min-width:auto;font-size:12px;border-radius:5px}
+      .voucher.applied .voucher-cta button{padding:7px 10px}
+      .voucher.applied .voucher-cta button svg{width:11px;height:11px}
+    }
+  </style>
+</head>
+<body>
+
+  <div class="mock-banner">
+    <b>Trang Demo UI</b> · Đây là trang giả lập để kiểm thử UX — không có giao dịch thực
+  </div>
+
+  <header class="topbar">
+    <div class="wrap topbar-inner">
+      <a href="/" class="logo" aria-label="Seyoul">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 229 76"><g fill="#c0a7e1"><path d="M66.82.04H38.99V5.6h27.83zm133.63 5.55v44.59h5.56V.04h-5.56zm-11.14 0v27.88a11.15 11.15 0 0 1-6.795 10.594A11.14 11.14 0 0 1 167.04 33.47V.04h-5.57v33.43a16.63 16.63 0 0 0 4.27 11.14q.608.696 1.3 1.31a16.71 16.71 0 0 0 22.27 0c.45-.42.89-.86 1.3-1.31a16.62 16.62 0 0 0 4.26-11.14V.04h-5.56zM94.28 28.97l-3.03-5.65-2.09-3.9v-.01l-7.4-13.82h-.01L78.78.04h-6.33l2.98 5.55 12.41 23.15 1.32 2.46v18.98h5.56V29.8l-.44-.82zM105.93.04l-3.5 5.55-7.71 12.23-.05.08.05.1 2.98 5.55 11.31-17.96 2.36-3.73 1.14-1.82zM66.81 27.91v-5.55H38.98v5.55zm.01 16.7H38.99v5.56h27.83zm66.81 0h-16.7v5.56h16.7v.01h5.58v-.01h16.69v-5.56zm94.66 0h-16.71v5.56h16.71zM17.9.04h-2.29A17.75 17.75 0 0 0 3.34 5.59a12.43 12.43 0 0 0-3.33 8 .14.14 0 0 0 0 .09 2 2 0 0 0 0 .27v.36c.041 1.35.312 2.682.8 3.94a14.33 14.33 0 0 0 5.89 6.86c6 3.72 14.8 1 19.51 6.82a6.82 6.82 0 0 1 1.61 4.32q.007.12 0 .24c-.16 4.51-5.07 8.12-11.1 8.12S5.79 41 5.63 36.49H.02v.1a12.36 12.36 0 0 0 3.35 8 17.92 17.92 0 0 0 13.35 5.56 17.9 17.9 0 0 0 13.34-5.56 12.32 12.32 0 0 0 3.35-8.1q.008-.12 0-.24a11.9 11.9 0 0 0-.82-4.32 14.23 14.23 0 0 0-5.82-6.79 18 18 0 0 0-6.52-2.47c-4.73-.82-9.76-.19-13.1-4.42a6.8 6.8 0 0 1-1.57-4.26v-.31c.22-4.48 5.12-8 11.12-8s10.92 3.57 11.14 8h5.67a12.5 12.5 0 0 0-3.33-8.09A17.77 17.77 0 0 0 17.9.04m115.73 38.87v-5.59a14 14 0 0 1 0-27.38V.34a19.49 19.49 0 0 0 0 38.57M139.2.31v5.6a13.999 13.999 0 0 1 0 27.36v5.64a19.471 19.471 0 0 0 11.959-32.034A19.47 19.47 0 0 0 139.2.36z"/></g></svg>
+      </a>
+      <div class="topbar-right">
+        <span class="cart-info">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.7 13.4a2 2 0 0 0 2 1.6h9.7a2 2 0 0 0 2-1.6L23 6H6"/></svg>
+          <span class="cart-text">Giỏ hàng (<b id="cartCount">2</b>)</span>
+        </span>
+        <span class="secure">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2 4 6v6c0 5 3.5 9 8 10 4.5-1 8-5 8-10V6z"/></svg>
+          <span class="secure-text">Thanh toán bảo mật</span>
+        </span>
+      </div>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <div class="grid">
+
+      <!-- ===== Form column (single page) ===== -->
+      <form class="form-col" id="checkoutForm" novalidate>
+
+        <!-- 1. Liên hệ -->
+        <div class="section">
+          <div class="section-head">
+            <h2>1. Liên hệ</h2>
+            <span class="meta">Đã có tài khoản? <a href="#">Đăng nhập</a></span>
+          </div>
+          <div class="panel">
+            <div class="field">
+              <input type="email" id="email" placeholder=" " autocomplete="email" />
+              <label for="email">Email</label>
+              <div class="err-msg">Vui lòng nhập email hợp lệ</div>
+            </div>
+            <label class="check">
+              <input type="checkbox" id="news" checked />
+              <span>Đăng ký nhận tin về sản phẩm mới và ưu đãi từ Seyoul</span>
+            </label>
+          </div>
+        </div>
+
+        <!-- 2. Giao hàng -->
+        <div class="section">
+          <div class="section-head">
+            <h2>2. Địa chỉ giao hàng</h2>
+          </div>
+          <div class="panel">
+            <div class="row">
+              <div class="field">
+                <input type="text" id="firstName" placeholder=" " autocomplete="given-name" />
+                <label for="firstName">Họ</label>
+                <div class="err-msg">Vui lòng nhập họ</div>
+              </div>
+              <div class="field">
+                <input type="text" id="lastName" placeholder=" " autocomplete="family-name" />
+                <label for="lastName">Tên</label>
+                <div class="err-msg">Vui lòng nhập tên</div>
+              </div>
+            </div>
+
+            <div class="field phone-wrap">
+              <input type="tel" id="phone" placeholder=" " autocomplete="tel" inputmode="tel" maxlength="10" />
+              <label for="phone">Số điện thoại</label>
+              <div class="err-msg">Số điện thoại phải có 9–10 chữ số</div>
+            </div>
+
+            <div class="row">
+              <div class="field is-select">
+                <select id="province" autocomplete="address-level1">
+                  <option value="">— Chọn —</option>
+                  <option>Bangkok (กรุงเทพมหานคร)</option>
+                  <option>Nonthaburi (นนทบุรี)</option>
+                  <option>Pathum Thani (ปทุมธานี)</option>
+                  <option>Samut Prakan (สมุทรปราการ)</option>
+                  <option>Chiang Mai (เชียงใหม่)</option>
+                  <option>Chiang Rai (เชียงราย)</option>
+                  <option>Phuket (ภูเก็ต)</option>
+                  <option>Chonburi (ชลบุรี)</option>
+                  <option>Pattaya / Bang Lamung (พัทยา/บางละมุง)</option>
+                  <option>Rayong (ระยอง)</option>
+                  <option>Nakhon Ratchasima / Korat (นครราชสีมา)</option>
+                  <option>Khon Kaen (ขอนแก่น)</option>
+                  <option>Udon Thani (อุดรธานี)</option>
+                  <option>Surat Thani (สุราษฎร์ธานี)</option>
+                  <option>Songkhla / Hat Yai (สงขลา/หาดใหญ่)</option>
+                  <option>Krabi (กระบี่)</option>
+                  <option>Tỉnh khác (Other)</option>
+                </select>
+                <label for="province">Tỉnh (จังหวัด)</label>
+                <div class="err-msg">Vui lòng chọn tỉnh</div>
+              </div>
+              <div class="field">
+                <input type="text" id="district" placeholder=" " />
+                <label for="district">Quận / Huyện (Khet / Amphoe)</label>
+                <div class="err-msg">Vui lòng nhập quận/huyện</div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="field">
+                <input type="text" id="ward" placeholder=" " />
+                <label for="ward">Phường / Xã (Khwaeng / Tambon)</label>
+                <div class="err-msg">Vui lòng nhập phường/xã</div>
+              </div>
+              <div class="field">
+                <input type="text" id="zip" placeholder=" " autocomplete="postal-code" inputmode="numeric" maxlength="5" />
+                <label for="zip">Mã bưu chính 5 số</label>
+                <div class="err-msg">Mã bưu chính Thái Lan có 5 chữ số</div>
+              </div>
+            </div>
+
+            <div class="field">
+              <input type="text" id="address" placeholder=" " autocomplete="street-address" />
+              <label for="address">Địa chỉ (số nhà, soi, ถนน/đường)</label>
+              <div class="err-msg">Vui lòng nhập địa chỉ</div>
+            </div>
+
+            <div class="field">
+              <textarea id="note" placeholder=" "></textarea>
+              <label for="note">Ghi chú cho đơn hàng (tuỳ chọn)</label>
+            </div>
+
+            <label class="check">
+              <input type="checkbox" id="invoice" />
+              <span>Xuất hoá đơn VAT cho công ty</span>
+            </label>
+          </div>
+        </div>
+
+        <!-- 3. Vận chuyển -->
+        <div class="section">
+          <div class="section-head">
+            <h2>3. Phương thức vận chuyển</h2>
+          </div>
+          <div class="panel">
+            <div class="ship-method selected" data-method="standard" data-price="0" tabindex="0">
+              <div class="left">
+                <div class="radio-dot"></div>
+                <div>
+                  <div class="title">Giao tiêu chuẩn — Thailand Post / Kerry Express</div>
+                  <div class="desc">Bangkok 3–4 ngày · Tỉnh xa 4–7 ngày · Miễn phí toàn quốc</div>
+                </div>
+              </div>
+              <div class="price">Miễn phí</div>
+            </div>
+
+            <div class="ship-method" data-method="express" data-price="80" tabindex="0">
+              <div class="left">
+                <div class="radio-dot"></div>
+                <div>
+                  <div class="title">Giao nhanh Bangkok — Kerry Express</div>
+                  <div class="desc">1–2 ngày làm việc · Khu vực Bangkok &amp; vùng ven</div>
+                </div>
+              </div>
+              <div class="price">80.00 ฿</div>
+            </div>
+
+            <div class="ship-method" data-method="sameday" data-price="150" tabindex="0">
+              <div class="left">
+                <div class="radio-dot"></div>
+                <div>
+                  <div class="title">Giao trong ngày Bangkok — Lalamove</div>
+                  <div class="desc">Đặt trước 14:00 · Nhận trong ngày · Chỉ trong Bangkok</div>
+                </div>
+              </div>
+              <div class="price">150.00 ฿</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 4. Thanh toán -->
+        <div class="section">
+          <div class="section-head">
+            <h2>4. Phương thức thanh toán</h2>
+            <span class="meta">
+              <svg style="width:12px;height:12px;vertical-align:-1px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+              Mã hoá SSL
+            </span>
+          </div>
+
+          <div class="pay-method selected" data-pay="cod">
+            <div class="head">
+              <div style="display:flex;align-items:center;gap:12px">
+                <span class="pay-radio"></span>
+                <span class="pay-name">Thanh toán khi nhận hàng (COD)<span class="small">Kiểm tra hàng trước khi thanh toán bằng tiền mặt</span></span>
+              </div>
+              <div class="pay-logos"><span class="pill">COD</span></div>
+            </div>
+            <div class="body">
+              Shipper sẽ liên hệ trước khi giao. Bạn có quyền kiểm tra hàng trước khi thanh toán tiền mặt.
+            </div>
+          </div>
+
+          <div class="pay-method" data-pay="card">
+            <div class="head">
+              <div style="display:flex;align-items:center;gap:12px">
+                <span class="pay-radio"></span>
+                <span class="pay-name">Thẻ tín dụng / ghi nợ<span class="small">Visa, Mastercard, JCB</span></span>
+              </div>
+              <div class="pay-logos">
+                <span class="pill visa">VISA</span>
+                <span class="pill mc">MC</span>
+                <span class="pill jcb">JCB</span>
+              </div>
+            </div>
+            <div class="body">
+              <div class="field">
+                <input type="text" id="cardNumber" placeholder=" " inputmode="numeric" autocomplete="cc-number" maxlength="19" />
+                <label for="cardNumber">Số thẻ</label>
+                <div class="err-msg">Số thẻ không hợp lệ</div>
+              </div>
+              <div class="row">
+                <div class="field">
+                  <input type="text" id="cardExp" placeholder=" " inputmode="numeric" autocomplete="cc-exp" maxlength="5" />
+                  <label for="cardExp">Hết hạn (MM/YY)</label>
+                  <div class="err-msg">Định dạng MM/YY</div>
+                </div>
+                <div class="field">
+                  <input type="text" id="cardCvc" placeholder=" " inputmode="numeric" autocomplete="cc-csc" maxlength="4" />
+                  <label for="cardCvc">CVV/CVC</label>
+                  <div class="err-msg">CVV không hợp lệ</div>
+                </div>
+              </div>
+              <div class="field">
+                <input type="text" id="cardName" placeholder=" " autocomplete="cc-name" />
+                <label for="cardName">Tên chủ thẻ (in trên thẻ)</label>
+                <div class="err-msg">Vui lòng nhập tên chủ thẻ</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="pay-method" data-pay="promptpay">
+            <div class="head">
+              <div style="display:flex;align-items:center;gap:12px">
+                <span class="pay-radio"></span>
+                <span class="pay-name">PromptPay QR<span class="small">Quét bằng app ngân hàng Thái Lan (Kasikorn, SCB, BBL...)</span></span>
+              </div>
+              <div class="pay-logos"><span class="pill vnpay">PROMPT</span></div>
+            </div>
+            <div class="body">
+              <div class="qr-block">
+                <div class="qr-img"></div>
+                <div class="qr-info">
+                  <b>Quét QR PromptPay</b>
+                  Mở app Mobile Banking, quét QR và xác nhận thanh toán.<br/>
+                  Mã QR có hiệu lực trong 5 phút.
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="pay-method" data-pay="truemoney">
+            <div class="head">
+              <div style="display:flex;align-items:center;gap:12px">
+                <span class="pay-radio"></span>
+                <span class="pay-name">TrueMoney Wallet<span class="small">Thanh toán qua ví TrueMoney</span></span>
+              </div>
+              <div class="pay-logos"><span class="pill momo">TRUE</span></div>
+            </div>
+            <div class="body">
+              Bạn sẽ được chuyển đến TrueMoney để hoàn tất giao dịch sau khi xác nhận đơn hàng.
+            </div>
+          </div>
+
+          <div class="pay-method" data-pay="rabbit">
+            <div class="head">
+              <div style="display:flex;align-items:center;gap:12px">
+                <span class="pay-radio"></span>
+                <span class="pay-name">Rabbit LINE Pay<span class="small">Thanh toán qua tài khoản LINE Pay</span></span>
+              </div>
+              <div class="pay-logos"><span class="pill zalo">LINE</span></div>
+            </div>
+            <div class="body">
+              Bạn sẽ được chuyển đến Rabbit LINE Pay để hoàn tất giao dịch.
+            </div>
+          </div>
+
+          <div class="pay-method" data-pay="bank">
+            <div class="head">
+              <div style="display:flex;align-items:center;gap:12px">
+                <span class="pay-radio"></span>
+                <span class="pay-name">Chuyển khoản ngân hàng<span class="small">SCB · Kasikorn · Bangkok Bank · Krungthai</span></span>
+              </div>
+              <div class="pay-logos"><span class="pill bank">BANK</span></div>
+            </div>
+            <div class="body">
+              <div style="font-size:13.5px;color:var(--ink-700);line-height:1.7">
+                <b style="color:var(--ink-900);font-weight:600">Siam Commercial Bank (SCB)</b> — STK <b style="font-family:Inter,sans-serif">123-4-56789-0</b><br/>
+                Chủ TK: <b>SEYOUL THAILAND CO., LTD.</b><br/>
+                Nội dung CK: <b style="color:var(--lav-700)">SY-[SĐT của bạn]</b>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 5. Đặt hàng -->
+        <div class="place-block">
+          <label class="check" style="margin-bottom:16px">
+            <input type="checkbox" id="terms" checked />
+            <span>Tôi đồng ý với <a href="#">Điều khoản dịch vụ</a> và <a href="#">Chính sách bảo mật</a> của Seyoul</span>
+          </label>
+
+          <button type="submit" class="btn-primary" id="placeOrder">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+            Đặt hàng — <span id="cta-amount">1,114.00 ฿</span>
+          </button>
+
+          <div class="place-foot">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2 4 6v6c0 5 3.5 9 8 10 4.5-1 8-5 8-10V6z"/></svg>
+            Mọi giao dịch được mã hoá và bảo mật bằng SSL
+          </div>
+        </div>
+      </form>
+
+      <!-- ===== Summary column ===== -->
+      <aside class="summary-col">
+        <div class="summary">
+
+          <button class="summary-toggle open" id="sumToggle" type="button" aria-expanded="true">
+            <span class="label">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.7 13.4a2 2 0 0 0 2 1.6h9.7a2 2 0 0 0 2-1.6L23 6H6"/></svg>
+              Đơn hàng · <b style="color:var(--ink-700)">2 sản phẩm</b>
+              <svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+            </span>
+            <span class="total">0₫</span>
+          </button>
+
+          <div class="summary-body open" id="sumBody">
+            <div class="summary-head">
+              <h3>Đơn hàng <span class="small">(2 sản phẩm)</span></h3>
+              <span class="small"><a href="#">Sửa giỏ</a></span>
+            </div>
+
+            <div class="line-item">
+              <div class="li-thumb">
+                <span class="glyph">GLOW</span>
+                <span class="qty-badge">1</span>
+              </div>
+              <div class="li-info">
+                <div class="li-name">Seyoul Glow Essence</div>
+                <div class="li-var">50ml · Dewy Finish · Mini Set</div>
+                <span class="li-tag">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 12 20 22 4 22 4 12"/><rect x="2" y="7" width="20" height="5"/><line x1="12" y1="22" x2="12" y2="7"/><path d="M12 7H7.5a2.5 2.5 0 0 1 0-5C11 2 12 7 12 7z"/><path d="M12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7z"/></svg>
+                  Tặng kèm: Mặt nạ giấy Hydra Mini
+                </span>
+              </div>
+              <div class="li-price-block">
+                <div class="li-price">675.00 ฿</div>
+                <div class="li-price-orig">890.00 ฿</div>
+              </div>
+            </div>
+
+            <div class="line-item">
+              <div class="li-thumb" style="background:linear-gradient(135deg,#fff,var(--lav-100))">
+                <span class="glyph" style="color:var(--lav-600)">DEW</span>
+                <span class="qty-badge">1</span>
+              </div>
+              <div class="li-info">
+                <div class="li-name">Morning Dew Toner</div>
+                <div class="li-var">150ml · Hydrating</div>
+              </div>
+              <div class="li-price-block">
+                <div class="li-price">439.00 ฿</div>
+              </div>
+            </div>
+
+            <!-- ===== Voucher section ===== -->
+            <div class="voucher-section">
+              <div class="voucher-section-head">
+                <span>Voucher khả dụng <span class="count" id="voucherCount">(5)</span></span>
+                <span class="toggle" id="voucherToggle">Thu gọn ▴</span>
+              </div>
+
+              <div class="promo" id="promo">
+                <input type="text" id="promoCode" placeholder="Nhập mã giảm giá" />
+                <button id="promoBtn" type="button">Áp dụng</button>
+              </div>
+
+              <button class="voucher-expand-btn" id="voucherExpandBtn" type="button">
+                <span class="left">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.59 13.41 13.42 20.58a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"/><circle cx="7" cy="7" r="1.5" fill="currentColor"/></svg>
+                  <span class="texts">
+                    <span class="main"><b id="voucherExpandCount">5</b> mã giảm giá khả dụng</span>
+                    <span class="hint" id="voucherExpandHint">Tiết kiệm tới 20% — bấm để xem</span>
+                  </span>
+                </span>
+                <svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+              </button>
+
+              <div class="voucher-list" id="voucherList"></div>
+            </div>
+
+            <div class="totals">
+              <div class="row-t"><span>Tạm tính</span><span id="subtotal">1,114.00 ฿</span></div>
+              <div class="row-t discount" id="discountRow" style="display:none"><span>Giảm giá</span><span id="discount">−0.00 ฿</span></div>
+              <div class="row-t"><span>Phí vận chuyển</span><span id="shipping">Miễn phí</span></div>
+              <div class="row-t muted" style="font-size:12.5px"><span>Đã bao gồm VAT 7%</span><span></span></div>
+              <div class="row-grand">
+                <span class="label">Tổng cộng</span>
+                <span><span class="big" id="grand">1,114.00 ฿</span><span class="ccy">THB</span></span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </aside>
+
+    </div>
+  </main>
+
+  <footer class="foot">
+    <div class="wrap foot-inner">
+      <div>© Seyoul · K-beauty Simple but Glowy</div>
+      <div>
+        <a href="#">Chính sách bảo mật</a> ·
+        <a href="#">Điều khoản dịch vụ</a> ·
+        <a href="#">Chính sách đổi trả</a> ·
+        <a href="#">Liên hệ</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Mobile sticky CTA -->
+  <div class="mobile-cta" id="mobileCta">
+    <div class="mobile-cta-info">
+      <div class="mobile-cta-label">Tổng cộng</div>
+      <div class="mobile-cta-total" id="mobile-total">1,114.00 ฿</div>
+    </div>
+    <button type="button" class="mobile-cta-btn" id="mobilePlaceOrder">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+      Đặt hàng
+    </button>
+  </div>
+
+  <!-- Success modal -->
+  <div class="success-overlay" id="successModal">
+    <div class="success-card">
+      <div class="check-circle">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="m5 12 5 5 9-10"/></svg>
+      </div>
+      <h1>Cảm ơn bạn đã đặt hàng ✨</h1>
+      <div class="order-no">Mã đơn hàng: <b id="orderNo">#SY-000000</b></div>
+      <p>Email xác nhận và mã vận đơn sẽ được gửi đến hộp thư của bạn trong vài phút tới. Đội ngũ Seyoul sẽ liên hệ trong 24 giờ nếu cần xác minh thêm.</p>
+      <button class="btn-primary" type="button" onclick="closeSuccess()">Đặt đơn mới (demo)</button>
+    </div>
+  </div>
+
+  <script>
+    // ---- State ----
+    const state = {
+      shipPrice: 0,
+      subtotal: 1114,           // ฿ (Thai Baht) — Glow Essence 675 + Dew Toner 439
+      appliedCode: null,        // percent voucher code (chỉ 1)
+      appliedShipCode: null,    // shipping voucher code (chỉ 1)
+    };
+
+    // ---- Vouchers (giá trị min tính theo ฿) ----
+    const VOUCHERS = [
+      { code: 'GLOW20',   type: 'percent',  value: 0.20, min: 1500, title: 'Giảm 20% toàn đơn',       desc: 'Áp dụng cho đơn từ 1,500 ฿',          expires: '31/12/2026', tier: 'gold' },
+      { code: 'KOL15',    type: 'percent',  value: 0.15, min: 800,  title: 'Mã KOL — giảm 15%',       desc: 'Đơn từ 800 ฿ · Độc quyền KOL',         expires: '30/11/2026', tier: 'lav' },
+      { code: 'SEYOUL10', type: 'percent',  value: 0.10, min: 0,    title: 'Giảm 10% toàn đơn',       desc: 'Không yêu cầu đơn tối thiểu',          expires: '31/12/2026', tier: 'lav' },
+      { code: 'FREESHIP', type: 'shipping',              min: 500,  title: 'Miễn phí giao nhanh',     desc: 'Miễn phí Express/Same-day · Đơn từ 500 ฿', expires: '31/12/2026', tier: 'ship' },
+      { code: 'WELCOME',  type: 'percent',  value: 0.05, min: 0,    title: 'Chào mừng — giảm 5%',     desc: 'Áp dụng cho khách hàng mới',           expires: 'Không giới hạn', tier: 'lav' },
+    ];
+
+    // THB format: "1,114.00 ฿"
+    const fmt = (n) => n.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + ' ฿';
+
+    // ---- Floating labels ----
+    document.querySelectorAll('input,select,textarea').forEach(el => {
+      const sync = () => {
+        const parent = el.closest('.field');
+        if (!parent) return;
+        const filled = el.tagName === 'SELECT'
+          ? (el.value && el.value !== '')
+          : !!el.value;
+        parent.classList.toggle('has-value', !!filled);
+      };
+      el.addEventListener('input', sync);
+      el.addEventListener('change', sync);
+      sync();
+    });
+
+    // ---- Validators ----
+    const setError = (id, ok) => {
+      document.getElementById(id).closest('.field').classList.toggle('error', !ok);
+      return ok;
+    };
+    const required = (id) => setError(id, document.getElementById(id).value.trim().length > 0);
+    const emailOk  = () => setError('email', /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(document.getElementById('email').value.trim()));
+    const phoneOk  = () => {
+      const v = document.getElementById('phone').value.replace(/\D/g, '');
+      return setError('phone', v.length >= 9 && v.length <= 10);
+    };
+    const cardOk = () => setError('cardNumber', document.getElementById('cardNumber').value.replace(/\s/g, '').length >= 13);
+    const expOk  = () => setError('cardExp', /^(0[1-9]|1[0-2])\/\d{2}$/.test(document.getElementById('cardExp').value.trim()));
+    const cvcOk  = () => setError('cardCvc', /^\d{3,4}$/.test(document.getElementById('cardCvc').value.trim()));
+
+    // ---- Submit (validate all, scroll to first error) ----
+    document.getElementById('checkoutForm').addEventListener('submit', (e) => {
+      e.preventDefault();
+
+      const checks = [
+        emailOk(),
+        required('firstName'),
+        required('lastName'),
+        phoneOk(),
+        required('province'),
+        required('district'),
+        required('ward'),
+        required('address'),
+      ];
+
+      const pay = document.querySelector('.pay-method.selected')?.dataset.pay;
+      if (pay === 'card') {
+        checks.push(cardOk(), expOk(), cvcOk(), required('cardName'));
+      }
+
+      const allOk = checks.every(Boolean);
+      const termsOk = document.getElementById('terms').checked;
+
+      if (!termsOk) {
+        alert('Vui lòng đồng ý với Điều khoản dịch vụ và Chính sách bảo mật để tiếp tục.');
+        return;
+      }
+
+      if (!allOk) {
+        const firstError = document.querySelector('.field.error');
+        if (firstError) {
+          firstError.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          firstError.querySelector('input,select,textarea')?.focus({ preventScroll: true });
+        }
+        return;
+      }
+
+      // Success
+      const n = Math.floor(100000 + Math.random() * 900000);
+      document.getElementById('orderNo').textContent = '#SY-' + n;
+      document.getElementById('successModal').classList.add('open');
+    });
+
+    function closeSuccess() {
+      document.getElementById('successModal').classList.remove('open');
+      document.getElementById('checkoutForm').reset();
+      document.querySelectorAll('.field').forEach(el => el.classList.remove('error', 'has-value'));
+      document.querySelectorAll('.ship-method').forEach((x, i) => x.classList.toggle('selected', i === 0));
+      document.querySelectorAll('.pay-method').forEach((x, i) => x.classList.toggle('selected', i === 0));
+      state.shipPrice = 0;
+      state.appliedCode = null;
+      state.appliedShipCode = null;
+      renderAll();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    // ---- Input formatting ----
+    document.getElementById('cardNumber').addEventListener('input', (e) => {
+      let v = e.target.value.replace(/\D/g, '').slice(0, 16);
+      e.target.value = v.replace(/(.{4})/g, '$1 ').trim();
+    });
+    document.getElementById('cardExp').addEventListener('input', (e) => {
+      let v = e.target.value.replace(/\D/g, '').slice(0, 4);
+      if (v.length >= 3) v = v.slice(0, 2) + '/' + v.slice(2);
+      e.target.value = v;
+    });
+    document.getElementById('phone').addEventListener('input', (e) => {
+      e.target.value = e.target.value.replace(/\D/g, '').slice(0, 10);
+    });
+    document.getElementById('zip').addEventListener('input', (e) => {
+      e.target.value = e.target.value.replace(/\D/g, '').slice(0, 5);
+    });
+
+    // ---- Shipping selection ----
+    document.querySelectorAll('.ship-method').forEach(el => {
+      el.addEventListener('click', () => {
+        document.querySelectorAll('.ship-method').forEach(x => x.classList.remove('selected'));
+        el.classList.add('selected');
+        state.shipPrice = parseFloat(el.dataset.price);
+        renderTotals();
+      });
+    });
+
+    // ---- Payment selection ----
+    document.querySelectorAll('.pay-method').forEach(el => {
+      el.querySelector('.head').addEventListener('click', () => {
+        document.querySelectorAll('.pay-method').forEach(x => x.classList.remove('selected'));
+        el.classList.add('selected');
+      });
+    });
+
+    // ---- Voucher rendering & toggle ----
+    function renderVouchers() {
+      const list = document.getElementById('voucherList');
+      document.getElementById('voucherCount').textContent = '(' + VOUCHERS.length + ')';
+
+      list.innerHTML = VOUCHERS.map(v => {
+        const eligible = state.subtotal >= v.min;
+        const isApplied = (v.type === 'percent' && state.appliedCode === v.code)
+                       || (v.type === 'shipping' && state.appliedShipCode === v.code);
+        const need = Math.max(0, v.min - state.subtotal);
+
+        const stubClass = v.tier === 'ship' ? 'ship' : (v.tier === 'gold' ? 'gold' : '');
+        const stubContent = v.type === 'shipping'
+          ? `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 7h11v9H3z"/><path d="M14 10h4l3 3v3h-7"/><circle cx="7" cy="18" r="2"/><circle cx="17" cy="18" r="2"/></svg><span class="v-tag">FREE</span>`
+          : `<span class="v-pct">${Math.round(v.value*100)}<span class="sup">%</span></span><span class="v-tag">OFF</span>`;
+
+        const ctaInner = isApplied
+          ? `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="m5 12 5 5 9-10"/></svg> Đang dùng`
+          : 'Áp dụng';
+
+        return `
+          <div class="voucher ${eligible ? '' : 'disabled'} ${isApplied ? 'applied' : ''}" data-code="${v.code}">
+            <div class="voucher-stub ${stubClass}">${stubContent}</div>
+            <div class="voucher-body">
+              <span class="v-code-badge">${v.code}</span>
+              <div class="voucher-title">${v.title}</div>
+              <div class="voucher-desc">${v.desc}</div>
+              <div class="voucher-exp">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
+                HSD: ${v.expires}
+              </div>
+              <div class="voucher-meta-inline">${v.desc}<span class="dot">·</span>HSD ${v.expires}</div>
+              ${!eligible ? `<div class="voucher-need">Cần thêm ${fmt(need)} để áp dụng</div>` : ''}
+            </div>
+            <div class="voucher-cta">
+              <button type="button" ${eligible ? '' : 'disabled'}>${ctaInner}</button>
+            </div>
+          </div>
+        `;
+      }).join('');
+
+      list.querySelectorAll('.voucher button').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const code = btn.closest('.voucher').dataset.code;
+          toggleVoucher(code);
+        });
+      });
+    }
+
+    function toggleVoucher(code) {
+      const v = VOUCHERS.find(x => x.code === code);
+      if (!v || state.subtotal < v.min) return;
+      if (v.type === 'percent') {
+        state.appliedCode = (state.appliedCode === code) ? null : code;
+      } else {
+        state.appliedShipCode = (state.appliedShipCode === code) ? null : code;
+      }
+      renderAll();
+    }
+
+    // ---- Manual promo input (fallback for hidden codes) ----
+    document.getElementById('promoBtn').addEventListener('click', applyPromoInput);
+    document.getElementById('promoCode').addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') { e.preventDefault(); applyPromoInput(); }
+    });
+    function applyPromoInput() {
+      const inp = document.getElementById('promoCode');
+      const code = inp.value.trim().toUpperCase();
+      const v = VOUCHERS.find(x => x.code === code);
+      if (!v) {
+        flashError(inp, 'Mã không hợp lệ — thử lại');
+        return;
+      }
+      if (state.subtotal < v.min) {
+        flashError(inp, 'Đơn chưa đủ điều kiện áp mã này');
+        return;
+      }
+      // Apply (or no-op if already applied)
+      if (v.type === 'percent') state.appliedCode = code;
+      else state.appliedShipCode = code;
+      inp.value = '';
+      renderAll();
+    }
+    function flashError(inp, msg) {
+      const orig = inp.placeholder;
+      inp.style.borderColor = 'var(--danger)';
+      inp.placeholder = msg;
+      inp.value = '';
+      setTimeout(() => { inp.style.borderColor = ''; inp.placeholder = orig; }, 1800);
+    }
+
+    // ---- Collapse/expand voucher list (desktop section-head toggle) ----
+    document.getElementById('voucherToggle').addEventListener('click', () => {
+      const list = document.getElementById('voucherList');
+      const btn = document.getElementById('voucherToggle');
+      const collapsed = list.classList.toggle('collapsed');
+      btn.textContent = collapsed ? 'Xem thêm ▾' : 'Thu gọn ▴';
+    });
+
+    // ---- Mobile expand voucher list ----
+    document.getElementById('voucherExpandBtn').addEventListener('click', () => {
+      const list = document.getElementById('voucherList');
+      const btn = document.getElementById('voucherExpandBtn');
+      const mainEl = btn.querySelector('.main');
+      const hintEl = btn.querySelector('.hint');
+      const expanded = list.classList.toggle('mobile-expanded');
+      btn.classList.toggle('expanded', expanded);
+      if (expanded) {
+        mainEl.textContent = 'Ẩn danh sách mã';
+        hintEl.textContent = `${VOUCHERS.length} mã đang được hiển thị`;
+      } else {
+        mainEl.innerHTML = `<b>${VOUCHERS.length}</b> mã giảm giá khả dụng`;
+        hintEl.textContent = 'Tiết kiệm tới 20% — bấm để xem';
+      }
+    });
+
+    // ---- Totals ----
+    function renderTotals() {
+      const sub = state.subtotal;
+      const voucher = VOUCHERS.find(v => v.code === state.appliedCode);
+      const disc = voucher ? sub * voucher.value : 0;
+
+      const rawShip = state.shipPrice;
+      const freeShip = !!state.appliedShipCode;
+      const ship = freeShip ? 0 : rawShip;
+
+      const grand = Math.max(0, sub - disc + ship);
+
+      document.getElementById('subtotal').textContent = fmt(sub);
+      const shipEl = document.getElementById('shipping');
+      if (freeShip && rawShip > 0) {
+        shipEl.innerHTML = `<span style="color:var(--ink-300);text-decoration:line-through;margin-right:6px">${fmt(rawShip)}</span><span style="color:var(--success);font-weight:500">Miễn phí</span>`;
+      } else {
+        shipEl.textContent = ship === 0 ? 'Miễn phí' : fmt(ship);
+      }
+      document.getElementById('grand').textContent = fmt(grand);
+      document.getElementById('cta-amount').textContent = fmt(grand);
+      document.querySelector('#sumToggle .total').textContent = fmt(grand);
+      document.getElementById('mobile-total').textContent = fmt(grand);
+
+      const dr = document.getElementById('discountRow');
+      if (disc > 0) {
+        dr.style.display = 'flex';
+        document.getElementById('discount').textContent = '−' + fmt(disc) + ' (' + state.appliedCode + ')';
+      } else {
+        dr.style.display = 'none';
+      }
+    }
+
+    // ---- Combined renderer ----
+    function renderAll() {
+      renderTotals();
+      renderVouchers();
+    }
+
+    // ---- Mobile summary toggle ----
+    document.getElementById('sumToggle').addEventListener('click', () => {
+      const b = document.getElementById('sumBody');
+      const t = document.getElementById('sumToggle');
+      const open = b.classList.toggle('open');
+      t.classList.toggle('open', open);
+      t.setAttribute('aria-expanded', open);
+    });
+
+    // ---- Mobile sticky CTA → submit form ----
+    document.getElementById('mobilePlaceOrder').addEventListener('click', () => {
+      document.getElementById('checkoutForm').requestSubmit();
+    });
+
+    // ---- Init ----
+    renderAll();
+  </script>
+</body>
+</html>
